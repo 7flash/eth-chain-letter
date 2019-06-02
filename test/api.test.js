@@ -1,5 +1,6 @@
 const { describe } = require('riteway')
-const Server = require('../src/server')
+const Fastify = require('fastify')
+const withAPI = require('../service/withAPI')
 
 const letter = {
   startLetter: () => 'message-hash',
@@ -9,26 +10,33 @@ const letter = {
 }
 
 describe('Server', async assert => {
-  const server = Server(letter)
+  const server = withAPI(
+    Fastify({ logger: true }),
+    letter
+  )
 
   const startResponse = await server.inject({
-    method: 'GET',
-    url: `/startLetter`
+    method: 'POST',
+    url: `/startLetter`,
+    payload: {}
   })
 
   const appendResponse = await server.inject({
-    method: 'GET',
-    url: '/appendMessage'
+    method: 'POST',
+    url: '/appendMessage',
+    payload: {}
   })
 
   const claimResponse = await server.inject({
-    method: 'GET',
-    url: '/claimReceipt'
+    method: 'POST',
+    url: '/claimReceipt',
+    payload: {}
   })
 
   const getMessagesResponse = await server.inject({
-    method: 'GET',
-    url: '/getMessages'
+    method: 'POST',
+    url: '/getMessages',
+    payload: {}
   })
 
   assert({

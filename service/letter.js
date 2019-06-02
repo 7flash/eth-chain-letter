@@ -25,11 +25,15 @@ const Letter = (contract) => {
     const { author, link } = messages[messageHash]
 
     if (link) {
-      const { message } = messages[link]
+      if (messages[link]) {
+        const { message } = messages[link]
 
-      const { tx } = await contract.revealMessage(author, messageHash, message)
+        const { tx } = await contract.revealMessage(author, messageHash, message)
 
-      return tx
+        return tx
+      } else {
+        throw new Error('message not existing')
+      }
     }
   }
 

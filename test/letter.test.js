@@ -1,7 +1,7 @@
 const { artifacts, ethereum } = require("@nomiclabs/buidler");
 const { describe } = require('riteway')
 const R = require('ramda')
-const LetterChain = require('../src/letter')
+const LetterChain = require('../service/letter')
 
 const contract = (() => {
   let hashes = {}

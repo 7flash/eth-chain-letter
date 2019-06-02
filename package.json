@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "parcel build ./ui/index.html --public-url ./",
+    "deploy": "node ./bin/deploy-contracts.js",
+    "start": "node ./bin/start-backend.js",
+    "test": "riteway test/*.test.js | tap-nirvana"
   },
   "keywords": [],
   "author": "",
@@ -17,11 +20,14 @@
     "dotenv": "^8.0.0",
     "fastify": "^2.4.1",
     "fastify-plugin": "^1.6.0",
+    "fastify-static": "^2.4.0",
+    "hyperapp": "2.0.0-beta.12",
     "openzeppelin-solidity": "2.2.0",
     "ramda": "^0.26.1",
-    "web3": "^1.0.0-beta.37"
+    "web3": "1.0.0-beta.37"
   },
   "devDependencies": {
+    "parcel": "^1.12.3",
     "riteway": "^6.0.3",
     "tap-nirvana": "^1.1.0"
   }

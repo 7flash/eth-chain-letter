@@ -1,5 +1,7 @@
 .env
 .idea
+.cache
 cache
+dist
 artifacts
 node_modules

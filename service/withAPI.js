@@ -1,34 +1,30 @@
-const Fastify = require('fastify')
-
-const Server = (letter) => {
-  const fastify = Fastify({ logger: true })
-
-  fastify.get('/startLetter', async (request, reply) => {
-    const { message, author } = request.query
+const withAPI = (server, letter) => {
+  server.post('/startLetter', async (request, reply) => {
+    const { message, author } = JSON.parse(request.body)
     const messageHash = await letter.startLetter(message, author)
 
     reply.type('application/json').code(200)
     return { messageHash }
   })
 
-  fastify.get('/appendMessage', async (request, reply) => {
-    const { message, link, author } = request.query
+  server.post('/appendMessage', async (request, reply) => {
+    const { message, link, author } = JSON.parse(request.body)
     const messageHash = await letter.appendMessage(message, link, author)
 
     reply.type('application/json').code(200)
     return { messageHash }
   })
 
-  fastify.get('/claimReceipt', async (request, reply) => {
-    const { messageHash, recipient } = request.query
+  server.post('/claimReceipt', async (request, reply) => {
+    const { messageHash, recipient } = JSON.parse(request.body)
     const transactionId = await letter.claimReceipt(messageHash, recipient)
 
     reply.type('application/json').code(200)
     return { transactionId }
   })
 
-  fastify.get('/getMessages', async (request, reply) => {
-    const { owner } = request.query
+  server.post('/getMessages', async (request, reply) => {
+    const { owner } = JSON.parse(request.body)
 
     const messages = await letter.getMessages(owner)
 
@@ -36,7 +32,7 @@ const Server = (letter) => {
     return { messages }
   })
 
-  return fastify
+  return server
 }
 
-module.exports = Server
+module.exports = withAPI
